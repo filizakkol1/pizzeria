@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оформление заказа — Mamma Mia Pizza</title>
+    <meta name="description" content="Оформите заказ пиццы с доставкой на дом. Быстрая доставка, качественные ингредиенты, традиционные рецепты.">
+    <meta name="keywords" content="заказ пиццы, доставка пиццы, пицца на дом, онлайн заказ пиццы">
+    <meta name="author" content="Mamma Mia Pizza">
+    <link rel="icon" href="images/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="order-page-body">
+    <header class="header">
+        <div class="container header__container">
+            <a href="index.html" class="header__logo">
+                <span class="header__logo-icon">🍕</span>
+                <span class="header__logo-text">Mamma Mia</span>
+            </a>
+            
+            <nav class="header__nav">
+                <ul class="header__nav-list">
+                    <li class="header__nav-item"><a href="index.html" class="header__nav-link">Главная</a></li>
+                    <li class="header__nav-item"><a href="index.html#menu" class="header__nav-link">Меню</a></li>
+                    <li class="header__nav-item"><a href="index.html#about" class="header__nav-link">О нас</a></li>
+                    <li class="header__nav-item"><a href="index.html#contacts" class="header__nav-link">Контакты</a></li>
+                    <li class="header__nav-item">
+                        <button class="btn btn--primary btn--small" id="orderCartToggle">
+                            <span class="cart-icon">🛒</span>
+                            <span class="cart-count">0</span>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+            
+            <button class="header__burger" id="headerBurger" aria-label="Меню">
+                <span class="header__burger-line"></span>
+                <span class="header__burger-line"></span>
+                <span class="header__burger-line"></span>
+            </button>
+        </div>
+    </header>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <ul class="mobile-menu__list">
+            <li class="mobile-menu__item"><a href="index.html" class="mobile-menu__link">Главная</a></li>
+            <li class="mobile-menu__item"><a href="index.html#menu" class="mobile-menu__link">Меню</a></li>
+            <li class="mobile-menu__item"><a href="index.html#about" class="mobile-menu__link">О нас</a></li>
+            <li class="mobile-menu__item"><a href="index.html#contacts" class="mobile-menu__link">Контакты</a></li>
+            <li class="mobile-menu__item">
+                <button class="btn btn--primary btn--block" id="mobileCartBtn">
+                    <span class="cart-icon">🛒</span>
+                    <span class="cart-count">0</span> Корзина
+                </button>
+            </li>
+        </ul>
+    </div>
+
+    <div class="cart" id="cart">
+        <div class="cart__header">
+            <h3 class="cart__title">Корзина</h3>
+            <button class="cart__close" id="cartClose" aria-label="Закрыть">×</button>
+        </div>
+        
+        <div class="cart__content">
+            <div class="cart__empty" id="cartEmpty">
+                <p>Корзина пуста</p>
+                <p class="cart__empty-sub">Добавьте пиццу из меню</p>
+            </div>
+            <div class="cart__items" id="cartItems"></div>
+        </div>
+        
+        <div class="cart__footer">
+            <div class="cart__total">
+                <span>Итого</span>
+                <span class="cart__total-price">0 ₽</span>
+            </div>
+            <button class="btn btn--primary btn--block" id="continueCheckout">Продолжить</button>
+            <a href="index.html" class="btn btn--outline btn--block">Вернуться в меню</a>
+        </div>
+    </div>
+
+    <main class="order-main">
+        <div class="container">
+            <div class="order-layout">
+                <div class="order-form-section">
+                    <div class="order-header">
+                        <h1 class="order-header__title">Оформление заказа</h1>
+                        <p class="order-header__subtitle">Заполните форму — мы доставим пиццу за 30 минут</p>
+                    </div>
+                    
+                    <div class="order-progress">
+                        <div class="order-progress__step order-progress__step--active">
+                            <span class="order-progress__number">1</span>
+                            <span class="order-progress__label">Данные</span>
+                        </div>
+                        <div class="order-progress__step">
+                            <span class="order-progress__number">2</span>
+                            <span class="order-progress__label">Доставка</span>
+                        </div>
+                        <div class="order-progress__step">
+                            <span class="order-progress__number">3</span>
+                            <span class="order-progress__label">Оплата</span>
+                        </div>
+                    </div>
+                    
+                    <form class="order-form" id="orderForm">
+                        <div class="form-card">
+                            <h2 class="form-card__title">Контактные данные</h2>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="name" class="form-label">Имя <span class="form-label__required">*</span></label>
+                                    <input type="text" id="name" class="form-input" required placeholder="Иван Иванов">
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone" class="form-label">Телефон <span class="form-label__required">*</span></label>
+                                    <input type="tel" id="phone" class="form-input" required placeholder="+7 (999) 923-45-67">
+                                </div>
+                                <div class="form-group form-group--full">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" id="email" class="form-input" placeholder="ivan@example.com">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-card">
+                            <h2 class="form-card__title">Адрес доставки</h2>
+                            <div class="form-grid">
+                                <div class="form-group form-group--full">
+                                    <label for="address" class="form-label">Улица и дом <span class="form-label__required">*</span></label>
+                                    <input type="text" id="address" class="form-input" required placeholder="ул. Итальянская, 15">
+                                </div>
+                                <div class="form-group">
+                                    <label for="apartment" class="form-label">Квартира/офис</label>
+                                    <input type="text" id="apartment" class="form-input" placeholder="42">
+                                </div>
+                                <div class="form-group">
+                                    <label for="entrance" class="form-label">Подъезд</label>
+                                    <input type="text" id="entrance" class="form-input" placeholder="1">
+                                </div>
+                                <div class="form-group">
+                                    <label for="floor" class="form-label">Этаж</label>
+                                    <input type="text" id="floor" class="form-input" placeholder="3">
+                                </div>
+                                <div class="form-group">
+                                    <label for="intercom" class="form-label">Домофон</label>
+                                    <input type="text" id="intercom" class="form-input" placeholder="1234">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-card">
+                            <h2 class="form-card__title">Время доставки</h2>
+                            <div class="form-radio-group">
+                                <label class="form-radio">
+                                    <input type="radio" name="delivery-time" value="asap" checked>
+                                    <span class="form-radio__content">
+                                        <span class="form-radio__title">Как можно скорее</span>
+                                        <span class="form-radio__subtitle">Доставим в течение 30 минут</span>
+                                    </span>
+                                </label>
+                                <label class="form-radio">
+                                    <input type="radio" name="delivery-time" value="specific">
+                                    <span class="form-radio__content">
+                                        <span class="form-radio__title">Ко времени</span>
+                                        <span class="form-radio__subtitle">Выберите удобное время</span>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="form-group" id="specificTimeField" style="display: none;">
+                                <label for="delivery-time-specific" class="form-label">Время</label>
+                                <input type="time" id="delivery-time-specific" class="form-input" min="10:00" max="23:00">
+                            </div>
+                        </div>
+                        
+                        <div class="form-card">
+                            <h2 class="form-card__title">Ваш заказ</h2>
+                            <div class="order-items" id="orderItems"></div>
+                            <div class="form-group">
+                                <label for="comments" class="form-label">Комментарий</label>
+                                <textarea id="comments" class="form-textarea" placeholder="Позвонить перед доставкой, не звонить в домофон..." rows="2"></textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="form-card">
+                            <h2 class="form-card__title">Способ оплаты</h2>
+                            <div class="form-radio-group">
+                                <label class="form-radio">
+                                    <input type="radio" name="payment" value="cash" checked>
+                                    <span class="form-radio__content">
+                                        <span class="form-radio__title">Наличными</span>
+                                        <span class="form-radio__subtitle">Оплата при получении</span>
+                                    </span>
+                                </label>
+                                <label class="form-radio">
+                                    <input type="radio" name="payment" value="card">
+                                    <span class="form-radio__content">
+                                        <span class="form-radio__title">Картой курьеру</span>
+                                        <span class="form-radio__subtitle">Оплата терминалом</span>
+                                    </span>
+                                </label>
+                                <label class="form-radio">
+                                    <input type="radio" name="payment" value="online">
+                                    <span class="form-radio__content">
+                                        <span class="form-radio__title">Онлайн</span>
+                                        <span class="form-radio__subtitle">Банковской картой на сайте</span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="order-summary">
+                            <div class="order-summary__row">
+                                <span>Стоимость товаров</span>
+                                <span id="items-price">0 ₽</span>
+                            </div>
+                            <div class="order-summary__row">
+                                <span>Доставка</span>
+                                <span id="delivery-price">0 ₽</span>
+                            </div>
+                            <div class="order-summary__row order-summary__row--total">
+                                <span>Итого</span>
+                                <span id="total-price">0 ₽</span>
+                            </div>
+                        </div>
+                        
+                        <div class="order-actions">
+                            <button type="submit" class="btn btn--primary btn--large">Подтвердить заказ</button>
+                            <a href="index.html" class="btn btn--outline">Вернуться в меню</a>
+                        </div>
+                        
+                        <p class="order-notice">Нажимая «Подтвердить заказ», вы соглашаетесь с <a href="#" class="order-notice__link">условиями обработки данных</a></p>
+                    </form>
+                </div>
+                
+                <div class="order-info-section">
+                    <div class="info-card">
+                        <h3 class="info-card__title">Информация о доставке</h3>
+                        
+                        <div class="info-item">
+                            <svg class="info-item__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="12 6 12 12 16 14"/>
+                            </svg>
+                            <div>
+                                <h4 class="info-item__title">30 минут</h4>
+                                <p class="info-item__text">Или пицца бесплатно</p>
+                            </div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <svg class="info-item__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <rect x="1" y="3" width="15" height="13"/>
+                                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+                                <circle cx="5.5" cy="18.5" r="2.5"/>
+                                <circle cx="18.5" cy="18.5" r="2.5"/>
+                            </svg>
+                            <div>
+                                <h4 class="info-item__title">Бесплатная доставка</h4>
+                                <p class="info-item__text">При заказе от 1500 ₽</p>
+                            </div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <svg class="info-item__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                            </svg>
+                            <div>
+                                <h4 class="info-item__title">Традиционные рецепты</h4>
+                                <p class="info-item__text">Готовим как в Неаполе</p>
+                            </div>
+                        </div>
+                        
+                        <div class="info-help">
+                            <h4 class="info-help__title">Нужна помощь?</h4>
+                            <p class="info-help__phone">+7 (999) 923-45-67</p>
+                            <p class="info-help__text">Звоните с 10:00 до 23:00</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__column">
+                    <a href="index.html" class="footer__logo">
+                        <span class="footer__logo-icon">🍕</span>
+                        Mamma Mia
+                    </a>
+                    <p class="footer__description">Итальянская пицца с доставкой. Неаполитанские традиции, свежие продукты, дровяная печь.</p>
+                    <p class="footer__copyright">© 2026 Mamma Mia Pizza</p>
+                </div>
+                
+                <div class="footer__column">
+                    <h4 class="footer__title">Навигация</h4>
+                    <ul class="footer__list">
+                        <li><a href="index.html" class="footer__link">Главная</a></li>
+                        <li><a href="index.html#menu" class="footer__link">Меню</a></li>
+                        <li><a href="index.html#about" class="footer__link">О нас</a></li>
+                        <li><a href="index.html#contacts" class="footer__link">Контакты</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer__column">
+                    <h4 class="footer__title">Контакты</h4>
+                    <ul class="footer__list footer__list--compact">
+                        <li>ул. Итальянская, 15</li>
+                        <li>+7 (999) 923-45-67</li>
+                        <li>mammamia@mail.com</li>
+                        <li>10:00 – 23:00</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
